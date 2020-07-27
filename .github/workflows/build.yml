@@ -15,12 +15,22 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
+    - name: Install base php environment
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        set -o nounset
+        set -o errexit
+        sudo apt-get update
+        sudo apt-get install -y \
+          autoconf \
+          zlib1g-dev \
+          php-7.2-cli \
+          php-pear
+          
+          
+    - name: Install and compile grpc
+      run: |
+        set -o nounset
+        set -o errexit
+        pecl version
+        pecl install grpc
+        pecl info grpc
