@@ -29,7 +29,7 @@ jobs:
         
         sudo update-alternatives --set php /usr/bin/php7.2
         sudo update-alternatives --set phpize /usr/bin/phpize7.2
-        sudo update-alternatives --set phpconfig /usr/bin/php-config7.2
+        sudo update-alternatives --set php-config /usr/bin/php-config7.2
       
         mkdir -p /tmp/pear/cache
         
