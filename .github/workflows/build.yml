@@ -57,7 +57,23 @@ jobs:
         
     - name: Strip debug symbols from grpc and protobuf
       run: |
+        set -o nounset
+        set -o errexit
         sudo strip --strip-debug /usr/lib/php/20170718/grpc.so
         sudo strip --strip-debug /usr/lib/php/20170718/protobuf.so
         
         ls -lh /usr/lib/php/20170718/
+        
+    - name: Rename package versions
+      run: |
+        set -o nounset
+        set -o errexit
+        mkdir artifacts
+        cp /usr/lib/php/20170718/grpc.so artifacts/grpc-php72-1.30.0.so
+        cp /usr/lib/php/20170718/protobuf.so artifacts/protobuf-php72-3.12.3.so
+        
+    - name: Publish artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ext-bins
+        path: artifacts/   
