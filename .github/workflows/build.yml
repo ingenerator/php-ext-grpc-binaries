@@ -29,14 +29,15 @@ jobs:
           
         pecl version
         php -v
+        
+        mkdir -p /tmp/pear/cache
           
           
     - name: Install and compile grpc
       run: |
         set -o nounset
         set -o errexit
-        pecl version
-        pecl install grpc
+        sudo pecl install grpc
         pecl info grpc
         ls -lh /usr/lib/php/20170718/
 
@@ -44,7 +45,7 @@ jobs:
       run: |
         set -o nounset
         set -o errexit
-        pecl install protobuf
+        sudo pecl install protobuf
         pecl info protobuf
         ls -lh /usr/lib/php/20170718/
         
