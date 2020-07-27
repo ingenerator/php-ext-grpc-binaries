@@ -23,8 +23,12 @@ jobs:
         sudo apt-get install -y \
           autoconf \
           zlib1g-dev \
-          php-7.2-cli \
+          php7.2-cli \
+          php7.2-dev \
           php-pear
+          
+        pecl version
+        php -v
           
           
     - name: Install and compile grpc
@@ -34,3 +38,13 @@ jobs:
         pecl version
         pecl install grpc
         pecl info grpc
+        ls -lh /usr/lib/php/20170718/
+
+    - name: Install and compile protobuf
+      run: |
+        set -o nounset
+        set -o errexit
+        pecl install protobuf
+        pecl info protobuf
+        ls -lh /usr/lib/php/20170718/
+        
