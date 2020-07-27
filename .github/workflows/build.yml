@@ -26,12 +26,18 @@ jobs:
           php7.2-cli \
           php7.2-dev \
           php-pear
-          
-        pecl version
-        php -v
         
+        sudo update-alternatives --set php /usr/bin/php7.2
+        sudo update-alternatives --set phpize /usr/bin/phpize7.2
+        sudo update-alternatives --set phpconfig /usr/bin/php-config7.2
+      
         mkdir -p /tmp/pear/cache
-          
+        
+    - name: Display php versions and configs    
+      run: |
+        php -v
+        pecl version
+        pecl config-show
           
     - name: Install and compile grpc
       run: |
@@ -40,7 +46,7 @@ jobs:
         sudo pecl install grpc
         pecl info grpc
         ls -lh /usr/lib/php/20170718/
-
+        
     - name: Install and compile protobuf
       run: |
         set -o nounset
@@ -49,3 +55,9 @@ jobs:
         pecl info protobuf
         ls -lh /usr/lib/php/20170718/
         
+    - name: Strip debug symbols from grpc and protobuf
+      run: |
+        sudo strip --strip-debug /usr/lib/php/20170718/grpc.so
+        sudo strip --strip-debug /usr/lib/php/20170718/protobuf.so
+        
+        ls -lh /usr/lib/php/20170718/
